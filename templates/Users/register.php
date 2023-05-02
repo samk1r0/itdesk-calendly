@@ -5,7 +5,7 @@
  */
 ?>
 <div class="row">
-    <div style="" class="column-responsive center column-80">
+    <div  class="column-responsive center">
         <div class="users form content">
             <?= $this->Form->create($user) ?>
             <fieldset>
@@ -13,6 +13,7 @@
                 <?php
                     echo $this->Form->control('email');
                     echo $this->Form->control('password');
+                    echo $this->Form->control('retype_password', ['type' => 'password']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

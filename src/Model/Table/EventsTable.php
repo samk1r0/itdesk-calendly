@@ -78,16 +78,14 @@ class EventsTable extends Table
             ->notEmptyString('description');
 
         $validator
-            ->scalar('slug')
-            ->maxLength('slug', 255)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug')
-            ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-
-        $validator
             ->dateTime('event_date')
             ->requirePresence('event_date', 'create')
             ->notEmptyDateTime('event_date');
+
+            $validator
+            ->boolean('public')
+            ->requirePresence('public', 'create')
+            ->notEmptyString('public');
 
         return $validator;
     }

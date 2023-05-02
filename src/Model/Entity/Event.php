@@ -34,10 +34,10 @@ class Event extends Entity
         'user_id' => true,
         'title' => true,
         'description' => true,
-        'slug' => true,
         'event_date' => true,
         'created' => true,
         'modified' => true,
         'user' => true,
+        'public' => true,
     ];
 }

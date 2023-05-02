@@ -43,7 +43,13 @@ class EventsController extends AppController
         $event = $this->Events->get($id, [
             'contain' => ['Users'],
         ]);
-        $this->Authorization->skipAuthorization();
+        $user_id = $this->request->getAttribute('identity') != null ? $this->request->getAttribute('identity')->getIdentifier() : '';
+        if($event->user_id == $user_id){
+            $this->Authorization->skipAuthorization();
+        }
+        else if($event->public){
+            $this->Authorization->skipAuthorization();
+        }
 
         $this->set(compact('event'));
     }
@@ -67,6 +73,7 @@ class EventsController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
+            debug($this->validationErrors);
             $this->Flash->error(__('The event could not be saved. Please, try again.'));
         }
         $users = $this->Events->Users->find('list', ['limit' => 200])->all();

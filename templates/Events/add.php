@@ -20,8 +20,8 @@
                 <?php
                     echo $this->Form->control('title');
                     echo $this->Form->control('description');
-                    echo $this->Form->control('slug');
                     echo $this->Form->control('event_date');
+                    echo $this->Form->control('public');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

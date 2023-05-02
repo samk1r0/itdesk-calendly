@@ -5,6 +5,7 @@
  */
 ?>
 <div class="row">
+    <?php if($event->user_id==$this->Identity->get('id')): ?> 
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
@@ -15,6 +16,9 @@
         </div>
     </aside>
     <div class="column-responsive column-80">
+    <?php else: ?>
+    <div class="column-responsive">
+    <?php endif; ?>
         <div class="events view content">
             <h3><?= h($event->title) ?></h3>
             <table>
@@ -29,14 +33,6 @@
                 <tr>
                     <th><?= __('Description') ?></th>
                     <td><?= h($event->description) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Slug') ?></th>
-                    <td><?= h($event->slug) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($event->id) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Event Date') ?></th>

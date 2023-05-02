@@ -18,11 +18,11 @@ class CreateEvents extends AbstractMigration
             ->addColumn('user_id','integer')
             ->addColumn('title','string')
             ->addColumn('description','string')
-            ->addColumn('slug','string')
             ->addColumn('event_date', 'datetime')
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
-            ->addIndex('slug', ['unique' => true])
+            ->addColumn('public', 'boolean')
+            ->addColumn('published', 'boolean',  ['null' => true])
         ->create();
     }
 }
