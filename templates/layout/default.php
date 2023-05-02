@@ -41,11 +41,22 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <a href="<?= $this->Url->build('/') ?>">Calendly</a>
         </div>
         <div class="top-nav-links">
-            <?= $this->request->getAttribute('id'); ?>
-            <?= $this->Html->link(
-            'Logout',
-            ['controller' => 'Users', 'action' => 'logout']
-        ); ?>
+            <?php if ($this->Identity->isLoggedIn()): ?>
+                <span><?= $this->Identity->get('email'); ?></span>
+                <?= $this->Html->link(
+                'Logout',
+                ['controller' => 'Users', 'action' => 'logout']
+                                    ); ?>
+            <?php else: ?>
+                <?= $this->Html->link(
+                'Log in',
+                ['controller' => 'Users', 'action' => 'login']
+                                    ); ?>
+                <?= $this->Html->link(
+                'Register',
+                ['controller' => 'Users', 'action' => 'register']
+                                    ); ?>
+            <?php endif; ?>
         </div>
     </nav>
     <main class="main">

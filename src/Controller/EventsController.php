@@ -47,7 +47,7 @@ class EventsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function register()
+    public function add()
     {
         $event = $this->Events->newEmptyEntity();
         if ($this->request->is('post')) {
