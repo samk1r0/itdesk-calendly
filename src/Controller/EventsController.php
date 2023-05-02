@@ -18,11 +18,16 @@ class EventsController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Users'],
+            'limit' => 5
         ];
-        $events = $this->paginate($this->Events);
-
+        $user_id = $this->request->getAttribute('identity')->getIdentifier();
+        $events = $this->Events->find('all', [
+            'conditions' => ['user_id' => $user_id]
+        ]);
+        $events = $this->paginate($events);
         $this->set(compact('events'));
     }
 
@@ -38,6 +43,7 @@ class EventsController extends AppController
         $event = $this->Events->get($id, [
             'contain' => ['Users'],
         ]);
+        $this->Authorization->skipAuthorization();
 
         $this->set(compact('event'));
     }
@@ -50,8 +56,12 @@ class EventsController extends AppController
     public function add()
     {
         $event = $this->Events->newEmptyEntity();
+        $this->Authorization->authorize($event);
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->getData());
+
+            $event->user_id = $this->request->getAttribute('identity')->getIdentifier();
+
             if ($this->Events->save($event)) {
                 $this->Flash->success(__('The event has been saved.'));
 
@@ -75,8 +85,12 @@ class EventsController extends AppController
         $event = $this->Events->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($event);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $event = $this->Events->patchEntity($event, $this->request->getData());
+            $event = $this->Events->patchEntity($event, $this->request->getData(),[
+                'accessibleFields' => ['user_id' => false]
+            ]);
+
             if ($this->Events->save($event)) {
                 $this->Flash->success(__('The event has been saved.'));
 
@@ -97,8 +111,10 @@ class EventsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['post', 'delete']);        
         $event = $this->Events->get($id);
+        $this->Authorization->authorize($event);
+
         if ($this->Events->delete($event)) {
             $this->Flash->success(__('The event has been deleted.'));
         } else {

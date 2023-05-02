@@ -20,7 +20,7 @@
             <table>
                 <tr>
                     <th><?= __('User') ?></th>
-                    <td><?= $event->has('user') ? $this->Html->link($event->user->id, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?></td>
+                    <td><?= $event->has('user') ? $this->Html->link($event->user->email, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Title') ?></th>

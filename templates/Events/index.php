@@ -11,8 +11,6 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('user_id') ?></th>
                     <th><?= $this->Paginator->sort('title') ?></th>
                     <th><?= $this->Paginator->sort('description') ?></th>
                     <th><?= $this->Paginator->sort('slug') ?></th>
@@ -24,21 +22,21 @@
             </thead>
             <tbody>
                 <?php foreach ($events as $event): ?>
-                <tr>
-                    <td><?= $this->Number->format($event->id) ?></td>
-                    <td><?= $event->has('user') ? $this->Html->link($event->user->id, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?></td>
-                    <td><?= h($event->title) ?></td>
-                    <td><?= h($event->description) ?></td>
-                    <td><?= h($event->slug) ?></td>
-                    <td><?= h($event->event_date) ?></td>
-                    <td><?= h($event->created) ?></td>
-                    <td><?= h($event->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $event->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= h($event->title) ?></td>
+                        <td><?= h($event->description) ?></td>
+                        <td><?= h($event->slug) ?></td>
+                        <td><?= h($event->event_date) ?></td>
+                        <td><?= h($event->created) ?></td>
+                        <td><?= h($event->modified) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $event->id]) ?>
+                            <?php if($event->user->id==$this->Identity->get('id')): ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]) ?>
+                            <?php endif ?>    
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
